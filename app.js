@@ -1,26 +1,42 @@
+// updateLastUserActivityTime().then((m) => { console.log(`last use => ${m}`) })
 
-console.log('hi');
 
-let posts = [];
+let posts = [{ title: 'POST1' }, { title: 'POST2' }];
+
+function printPost(){
+  posts.forEach((post) => {
+    console.log(post.title)
+  })
+}
 
 let p1 = function () {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      posts.push('first : person1');
-      resolve('first person add');
-    }, 5000)
-  })
-}
-let p2 = function () {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      posts.push('secound : person2');
-      resolve('secound person add');
-    }, 3000);
+      posts.push({ title: 'POST3' });
+      resolve('person3');
+    }, 1000)
   })
 }
 
-function deleteposts (){
+let p2 = function () {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      posts.push({ title: 'POST4' });
+      resolve('person4');
+    }, 5000);
+  })
+}
+
+function updateLastUserActivityTime() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let fullTime = new Date();
+      resolve(fullTime)
+    }, 1000)
+  })
+}
+
+function deleteposts() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       item = posts.pop();
@@ -29,10 +45,8 @@ function deleteposts (){
   })
 }
 
-let pre = async() => {
-  await p1();
-  await p2();
-  console.log(posts);
-  await deleteposts().then((m)=>{console.log(m)})
-}
-pre();
+// Promise.all([p1(), updateLastUserActivityTime()]).then((m) => {console.log(m)})
+// Promise.all([p2(), updateLastUserActivityTime()]).then((m) => {console.log(m)})
+
+Promise.all([p1(), p2(),]).then(() => printPost())
+
